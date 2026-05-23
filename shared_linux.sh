@@ -91,7 +91,9 @@ create_test_file_entries()
 	truncate -s $(( 1 * 1024 * 1024 )) ${MOUNT_POINT}/testdir1/trailing_sparse1
 
 	# Create a file with an uninitialized extent
-	fallocate -x -l 4096 ${MOUNT_POINT}/testdir1/uninitialized1
+	# TODO: check if truncate provides the same result as fallocate
+	# fallocate -x -l 4096 ${MOUNT_POINT}/testdir1/uninitialized1
+	truncate -s 4096 ${MOUNT_POINT}/testdir1/uninitialized1
 	echo "File with an uninitialized extent" >> ${MOUNT_POINT}/testdir1/uninitialized1
 
 	# Create a block device file
@@ -104,6 +106,11 @@ create_test_file_entries()
 
 	# Create a pipe (FIFO) file
 	mknod ${MOUNT_POINT}/testdir1/pipe1 p
+
+	# Create a directory that can be stored as inline data
+	mkdir ${MOUNT_POINT}/testdir2
+
+	echo "Inline directory entry" > ${MOUNT_POINT}/testdir2/testfile1
 }
 
 # Creates a test image file.
