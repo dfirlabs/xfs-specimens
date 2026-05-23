@@ -25,7 +25,7 @@ jobs:
         DEBIAN_FRONTEND: noninteractive
       run: |
         apt update -q
-        apt install -y attr xfsprogs sudo
+        apt install -y attr sudo qemu-utils xfsprogs
     - name: Generate test data
       env:
         LANG: en_US.UTF-8
@@ -36,4 +36,4 @@ jobs:
     - uses: actions/upload-artifact@v7
       with:
         name: specimens-linux
-        path: specimens/mkfs.xfs-*/*.raw
+        path: specimens/mkfs.xfs-*/*.*
